@@ -1,11 +1,20 @@
 # Milestone 1 Report
-
+ 
 ## Task 1
+
+The MNIST dataset is a widely-used collection of handwritten digits for training machine learning models in image classification.
+It combines images from NIST's Special Databases 1 and 3: SD-1, featuring complex digits from high school students, and SD-3, with clearer digits from Census Bureau employees.
+
 **Is it a classification or regression problem?**
+
+The dataset presents a classification problem, specifically aimed at identifying and categorizing handwritten digits from 0 to 9 by analyzing patterns in the image pixel data.
 
 **What are the characteristics of the data set?**
 
-
+- Contains 60,000 training images and 10,000 testing images, each of which is a grayscale image of size 28x28 pixels.
+- The pixel values are stored as unsigned bytes (0 to 255), where 0 - white background, 255 -black foreground.
+- Data files are stored in a specific IDX file format, designed for vectors and multidimensional matrices.
+- Metadata such as magic numbers and sizes in each dimension are also included.
 
 ## Task 4 
 **Explain in detail which steps were necessary to run the code**
@@ -39,6 +48,8 @@ These were all added to *requirements.txt*.
 
 ## Task 5
 
+This code represents a system pipeline for handwritten digit classification utilizing the MNIST dataset within the TensorFlow framework using the Keras API.
+
 **What is the input to and the output from the neural network?**
 
 The input is 60000 images and their labels (10 categories), as described in *Task 1*. Specifically, the images are 28x28 pixels in size, each pixel with a value representing greyscale, scaled. (input_shape, /255) The input array is shape is also defined (making sure each pixel has a greyscale value)
@@ -59,6 +70,7 @@ MNIST is part of the datasets included in the Keras library. It is already divid
 
 **Which dependencies are imported?**
 
+Dependencies such as Numpy and various TensorFlow modules are imported to enable numerical operations and neural network functionality.
 The libraries: 
 - numpy package
 - tensorflow.keras module
@@ -68,6 +80,13 @@ The libraries:
 
 **What kind of neural network architecture are you dealing with?**
 
+A Convolutional Neural Network (CNN) model is constructed, comprising layers such as convolutional, pooling, and dense layers. This architecture is optimized for extracting hierarchical features from image data, essential for accurate classification tasks.
+
+The model trains by going through the whole dataset 15 times (epochs). 
+In each epoch, it processes 128 images at a time (batch size), updating its knowledge each time. It uses a specific method (categorical cross-entropy loss and Adam optimizer) to improve its predictions based on the training.
+
+Finally, the model is tested to see how well it works on new data, measuring its accuracy and mistakes, showing if it’s ready for practical use in recognizing handwritten digits.
+
 
 ## References
 
@@ -75,4 +94,6 @@ The libraries:
 2) https://www.tensorflow.org/
 3) https://keras.io/api/datasets/
 4) https://keras.io/api/datasets/mnist/#load_data-function
-
+5) http://yann.lecun.com/exdb/mnist/
+6) https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/
+7) https://medium.com/data-science-365/acquire-understand-and-prepare-the-mnist-dataset-3d71a84e07e7
