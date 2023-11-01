@@ -43,7 +43,9 @@ These were all added to *requirements.txt*.
 
 **Are the versions dependent on the system the code is being run on? (try running it on different machines, by checking out the code onto these machines. Does it work out of the box?)** 
 
-
+We run code on different operating systems: Ubuntu, macOS, and Windows, and encountered some dependency issues. Code didn’t work "out of the box" across all systems.
+Libraries (in our case TensorFlow and NumPy), along with the Python version, needed to be compatible and well-matched for successful code execution. 
+TensorFlow, for example, has problems with Python 3.12 compatibility, therefore the versions used had to be changed.
 
 
 ## Task 5
