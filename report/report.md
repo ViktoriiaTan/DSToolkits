@@ -54,9 +54,13 @@ TensorFlow, for example, has problems with Python 3.12 compatibility, therefore 
 This code represents a system pipeline for handwritten digit classification utilizing the MNIST dataset within the TensorFlow framework using the Keras API.
 
 **What is the input to and the output from the neural network?**
+Input to the Neural Network:
+Images of handwritten digits: The input data consists of 60,000 images, each of which belongs to one of ten categories (0-9), as explained in *Task 1*. Each image is 28x28 pixels in size, and each pixel has a value that represents the intensity of the grayscale color (0-255). The shape of the input array has also been configured to ensure proper grayscale values for each pixel.  
 
-The input is 60000 images and their labels (10 categories), as described in *Task 1*. Specifically, the images are 28x28 pixels in size, each pixel with a value representing greyscale, scaled. (input_shape, /255) The input array is shape is also defined (making sure each pixel has a greyscale value).
-The output is labels for the 10000 test images, status messages and metrics of the model's performance (epochs, accuracy, loss).
+
+Output of the Neural Network:
+The output of the model includes predicted labels (0-9) for a set of 10,000 test images, along with status messages and metrics that provide information about the model's performance: number of training epochs, accuracy, and loss.
+
 
 
 **What is Keras? And how does it relate to Tensorflow?**
