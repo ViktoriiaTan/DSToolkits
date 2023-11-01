@@ -27,8 +27,18 @@ We decided to use python 3, as it is the currently recommended version.
 In our case, pip was not installed either:
 `sudo apt install python3-pip`  
 
+We decided to use virtual environments, for that we installed via 
+`python3 -m venv myenv`   
+ and to activate used : 
+ `source myenv/bin/activate`  
+
 Dependencies needed to be installed as well, which can be found in *requirements.txt*:
 `pip install -r requirements.txt`  
+
+Then we were able to run the script: `python3 mnist_convnet.py`  
+
+When done, turned the virtual environment off with `deactivate`
+
 
 
 **Find out what versions are being used to run the code (python version and all dependencies)**
