@@ -20,15 +20,15 @@ The dataset presents a classification problem, specifically aimed at identifying
 **Explain in detail which steps were necessary to run the code**
 
 In our virtual machine, the python version needed to be clarified first:
-`sudo apt update`
-`sudo apt install python3`
+`sudo apt update`  
+`sudo apt install python3`  
 We decided to use python 3, as it is the currently recommended version.
 
 In our case, pip was not installed either:
-`sudo apt install python3-pip`
+`sudo apt install python3-pip`  
 
 Dependencies needed to be installed as well, which can be found in *requirements.txt*:
-`pip install -r requirements.txt`
+`pip install -r requirements.txt`  
 
 
 **Find out what versions are being used to run the code (python version and all dependencies)**
@@ -44,9 +44,9 @@ These were included in *requirements.txt*.
 
 **Are the versions dependent on the system the code is being run on? (try running it on different machines, by checking out the code onto these machines. Does it work out of the box?)** 
 
-We ran the code on different operating systems: Ubuntu, macOS, and Windows, and encountered some dependency issues. The code didn’t work "out of the box" across all systems.
-Libraries (in our case TensorFlow and NumPy), along with the Python version, needed to be compatible and well-matched for successful code execution. 
-TensorFlow, for example, has problems with Python 3.12 compatibility, therefore the versions used had to be changed.
+We ran the code on different operating systems: Ubuntu, macOS, and Windows, and encountered some dependency issues. The code didn’t work "out of the box" across all systems.  
+Libraries (in our case TensorFlow and NumPy), along with the Python version, needed to be compatible and well-matched for successful code execution.   
+TensorFlow, for example, has problems with Python 3.12 compatibility, therefore the versions used had to be changed.  
 
 
 ## Task 5
@@ -73,7 +73,7 @@ MNIST is part of the datasets included in the Keras library. It is already divid
 
 **Which dependencies are imported?**
 
-Dependencies such as Numpy and various TensorFlow modules are imported to enable numerical operations and neural network functionality.
+Dependencies such as Numpy and various TensorFlow modules are imported to enable numerical operations and neural network functionality.  
 The libraries are: 
 - numpy package
 - tensorflow.keras module
