@@ -19,15 +19,16 @@ The dataset presents a classification problem, specifically aimed at identifying
 ## Task 4 
 **Explain in detail which steps were necessary to run the code**
 
-In our virtual machine, the python version needed to be clarified:
-´sudo apt update´
-´sudo apt install python3´
+In our virtual machine, the python version needed to be clarified first:
+`sudo apt update`
+`sudo apt install python3`
 We decided to use python 3, as it is the currently recommended version.
 
-pip was not installed either:
-´sudo apt install python3-pip´
-Requirements needed to be installed as well, which can be found in *requirements.txt*:
-´pip install -r requirements.txt´
+In our case, pip was not installed either:
+`sudo apt install python3-pip`
+
+Dependencies needed to be installed as well, which can be found in *requirements.txt*:
+`pip install -r requirements.txt`
 
 
 **Find out what versions are being used to run the code (python version and all dependencies)**
@@ -38,12 +39,12 @@ Our machine runs
 - numpy 1.23.5
 - tensorflow 2.14.0
 
-These were all added to *requirements.txt*.
+These were included in *requirements.txt*.
 
 
 **Are the versions dependent on the system the code is being run on? (try running it on different machines, by checking out the code onto these machines. Does it work out of the box?)** 
 
-We run code on different operating systems: Ubuntu, macOS, and Windows, and encountered some dependency issues. Code didn’t work "out of the box" across all systems.
+We ran the code on different operating systems: Ubuntu, macOS, and Windows, and encountered some dependency issues. The code didn’t work "out of the box" across all systems.
 Libraries (in our case TensorFlow and NumPy), along with the Python version, needed to be compatible and well-matched for successful code execution. 
 TensorFlow, for example, has problems with Python 3.12 compatibility, therefore the versions used had to be changed.
 
@@ -54,7 +55,7 @@ This code represents a system pipeline for handwritten digit classification util
 
 **What is the input to and the output from the neural network?**
 
-The input is 60000 images and their labels (10 categories), as described in *Task 1*. Specifically, the images are 28x28 pixels in size, each pixel with a value representing greyscale, scaled. (input_shape, /255) The input array is shape is also defined (making sure each pixel has a greyscale value)
+The input is 60000 images and their labels (10 categories), as described in *Task 1*. Specifically, the images are 28x28 pixels in size, each pixel with a value representing greyscale, scaled. (input_shape, /255) The input array is shape is also defined (making sure each pixel has a greyscale value).
 The output is labels for the 10000 test images, status messages and metrics of the model's performance (epochs, accuracy, loss).
 
 
@@ -73,7 +74,7 @@ MNIST is part of the datasets included in the Keras library. It is already divid
 **Which dependencies are imported?**
 
 Dependencies such as Numpy and various TensorFlow modules are imported to enable numerical operations and neural network functionality.
-The libraries: 
+The libraries are: 
 - numpy package
 - tensorflow.keras module
 - tensorflow.keras.layers submodule
