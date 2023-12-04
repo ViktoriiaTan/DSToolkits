@@ -1,17 +1,18 @@
 """
-This module for loading and preprocessing the MNIST dataset, including data scaling,
-reshaping  and conversion of class vectors to binary matrices.
+This module for loading and preprocessing the MNIST dataset, including data
+scaling,reshaping  and conversion of class vectors to binary matrices.
 """
 
 import numpy as np
 from tensorflow import keras
 
+
 def load_prep_data():
     """
     Load and preprocess the MNIST dataset.
-    
     Returns:
-    Tuple of numpy arrays: (x_train, y_train), (x_test, y_test), num_classes, input_shape
+    Tuple of numpy arrays: (x_train, y_train), (x_test, y_test),
+    num_classes, input_shape
     """
     num_classes = 10
     input_shape = (28, 28, 1)
