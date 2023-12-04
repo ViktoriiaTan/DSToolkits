@@ -1,5 +1,5 @@
 """
-Module for building a basic convolutional neural network using TensorFlow and Keras.
+Module for building a basic convolutional neural network.
 """
 
 from tensorflow import keras
