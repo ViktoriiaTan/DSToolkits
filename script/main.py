@@ -7,7 +7,7 @@ from module_io import load_mnist, save_modelh5, load_modelh5
 from data_prepar import preproc
 from model_architect import create_model
 from train import train_model
-from eval_model import eval_model
+from eval_predict import eval_model, predict
 
 
 def main():
@@ -38,6 +38,12 @@ def main():
 
     print(f"Test Loss: {test_loss}")
     print(f"Test Accuracy: {test_accuracy}")
+
+    # Make predictions
+    predictions = predict(model, x_test)
+
+    # Print the first ten predictions
+    print("First ten predictions:", predictions[:10])
 
 
 if __name__ == "__main__":
