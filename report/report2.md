@@ -5,9 +5,9 @@
 In the milestone1 we created a .gitignore file in the root directory. 
 It is essential for excluding non-essential or sensitive files (like passwords, API keys) from the version control system, ensuring a clean and secure codebase.  
 For milestone 2, we updated our .gitignore by including myenv, data, pycache and other folders.  
-* The exclusion of `myenv` helps prevent the buildup of individual environment configurations and dependencies, ensuring a separate and tailored development setup for each developer.  
-* Excluding the `data` folder via .gitignore helps keep it efficient by avoiding large files, sensitive information, and irrelevant data.  
-* Ignoring `pycache` directories avoids versioning Python bytecode files, which are machine and interpreter-specific, thus reducing repository noise and potential merge conflicts.  
+* The exclusion of "myenv" helps prevent the buildup of individual environment configurations and dependencies, ensuring a separate and tailored development setup for each developer.  
+* Excluding the "data" folder via .gitignore helps keep it efficient by avoiding large files, sensitive information, and irrelevant data.  
+* Ignoring "pycache" directories avoids versioning Python bytecode files, which are machine and interpreter-specific, thus reducing repository noise and potential merge conflicts.  
 
 We managed our .gitignore file by creating a special branch called gitignore-updates specifically for changes to .gitignore. Everyone could update this branch as needed and then merge these updates into their own work branches. When these feature branches are ready to merge into the main branch, they already include the latest .gitignore updates.  
 This approach keeps our main branch organized and ensures that everyone works with the most current .gitignore settings.
@@ -57,14 +57,41 @@ We can assess the quality of a Python package on PyPI by first searching for and
 
 ## Task 3
 
-The `mnist_ convnet` script incorporates essential elements for a basic machine learning workflow with Keras and TensorFlow.  
-It loads the MNIST dataset using keras.datasets.mnist.load_data() and defines a Sequential model with convolutional and dense layers. The model is compiled with the Adam optimizer and categorical crossentropy loss function. Training is conducted using model.fit() with a specific batch size and number of epochs.  
-In order  to save the trained model to a .h5 file, we added model.save (model.h5) after training the model (module_ io), to load a model from a .h5 file, we added keras.models.load_ model(model.h5) in module_io.  
-Also this model can make predictions on new data. By applying the model.predict(x_test) method, it generates class probabilities for each of the ten digit classes. These probabilities indicate the likelihood of each test image belonging to a particular digit class.
+The "mnist_ convnet" script incorporates essential elements for a basic machine learning workflow with Keras and TensorFlow.  
+It loads the MNIST dataset using `keras.datasets.mnist.load_data()` and defines a Sequential model with convolutional and dense layers. The model is compiled with the Adam optimizer and categorical crossentropy loss function. Training is conducted using `model.fit()` with a specific batch size and number of epochs.  
+In order  to save the trained model to a .h5 file, we added `model.save(model.h5)` after training the model (module_ io), to load a model from a .h5 file, we added keras.models.load_ model(model.h5) in module_io.  
+Also this model can make predictions on new data. By applying the `model.predict(x_test)` method, it generates class probabilities for each of the ten digit classes. These probabilities indicate the likelihood of each test image belonging to a particular digit class.
 
 ## Task 4
 
+We've restructured our code into separate modules like module_ io, data_ prepar, model_ architect, train, and eval_predict to organise the code logically. This makes our code easier to read, update, and reuse.  
+Smaller, focused files are simpler to manage than one large script. Modules can be used again in different parts of the project. Smaller pieces of code are simpler to test and debug.  
+For example, isolating the model_architect  allows for easy experimentation with different model configurations.  
+
+Structure of the code:
+
+Main script main.py runs the whole process: loads data, processes it, builds and trains the model, saves it and makes predictions.  
+
+Modules:
+* Data handling (module_io.py): loads the MNIST data and handles saving/loading models.  
+* Data preprocessing (data_prepar.py): prepares the data for the model (like scaling images).  
+* Model building (model_architect.py): contains the structure of the neural network.  
+* Model training (train.py): code to train the model.  
+* Evaluation and prediction (eval_predict.py): used for testing the model and making predictions.  
+
+
 ## Task 5
+
+We created a requirements.txt file for our code during milestone1. We identified all the necessary packages our project relies on, including their specific versions there.  
+There are SHA256 hash digests (from PyPI) for each of them:
+
+|  Package  | Version |                         Hash                                          |
+|:----------|:--------|:----------------------------------------------------------------------|
+|pip        | 22.0.2  |sha256:27b4b70c34ec35f77947f777070d8331adbb1e444842e98e7150c288dc0caea4|
+|numpy      | 1.23.5  |sha256:1b1766d6f397c18153d40015ddfc79ddb715cabadc04d2d228d4e5a8bc4ded1a|
+|tensorflow | 2.14.0  |sha256:c3870063433aebbd1b8da65ed4dcb09495f9239397f8cb5a8822025b6bb65e04|
+
+We set up a virtual environment named "myenv" in our project directory using Python's venv module for isolation. After activating this environment `source myenv/bin/activate`, we installed our dependencies with `pip install -r requirements.txt`. Once installation was complete, we deactivated the environment with the `deactivate` command.
 
 ## Task 6
 
@@ -72,3 +99,12 @@ Initially, we tried using the Tensorflow image from Docker Hub, but it was unabl
 Then we changed to the Python image. 
 We chose the image that uses Python version 3.10, checked the requirements for compatibility and built the container.
 We also added a Dockerignore file.
+
+## References:
+
+1. https://resources.infosecinstitute.com/topics/cryptography/introduction-to-hash-functions/
+2. https://pypi.org/project/
+3. https://realpython.com/run-python-scripts/
+4. https://www.linkedin.com/pulse/quality-over-quantity-all-python-packages-created-jessica
+5. https://peps.python.org/pep-0008/#variable-annotations
+6. https://hub.docker.com/
