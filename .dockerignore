@@ -1,0 +1,19 @@
+# Exclude temporary and cache files
+*.pyc
+__pycache__/
+
+# Exclude development and version control files
+.vscode/
+.git/
+.gitignore
+
+# Exclude Docker-related files
+Dockerfile
+.dockerignore
+
+# Exclude data files that are not needed for the Docker image
+data/
+
+# Exclude virtual environment files
+venv/
+
