@@ -2,7 +2,18 @@
 
 ## Task 1
 
+In the milestone1 we created a .gitignore file in the root directory. 
+It is essential for excluding non-essential or sensitive files (like passwords, API keys) from the version control system, ensuring a clean and secure codebase.  
+For milestone 2, we updated our .gitignore by including myenv, data, pycache and other folders.  
+* The exclusion of `myenv` helps prevent the buildup of individual environment configurations and dependencies, ensuring a separate and tailored development setup for each developer.  
+* Excluding the `data` folder via .gitignore helps keep it efficient by avoiding large files, sensitive information, and irrelevant data.  
+* Ignoring `pycache` directories avoids versioning Python bytecode files, which are machine and interpreter-specific, thus reducing repository noise and potential merge conflicts.  
+
+We managed our .gitignore file by creating a special branch called gitignore-updates specifically for changes to .gitignore. Everyone could update this branch as needed and then merge these updates into their own work branches. When these feature branches are ready to merge into the main branch, they already include the latest .gitignore updates.  
+This approach keeps our main branch organized and ensures that everyone works with the most current .gitignore settings.
+
 ## Task 2
+
 **What is a Hash function? What are some of the use cases?**
 
 A hash function is a special type of function in computing for implementing security. It takes input (which can be anything from a string of text to a file) and converts it into a fixed-size string of characters. This output, typically a sequence of numbers and letters (hash value/ hash code).  
@@ -19,6 +30,7 @@ Hash function is widely used:
 * A Python script is a file with executable Python code, typically saved with a .py extension. Scripts can be run directly by a Python interpreter and may include a mix of functions, classes, and standalone code. Scripts are often used for specific tasks or small programs and are the simplest form of Python code execution.  
 
 **How would you explain a Docker container and volume to a child?**
+
 A Docker container is like a set of Lego. 
 Each Lego piece, a building block represents a piece of the program: code, tools,  all files needed for running. 
 Just as the Lego pieces themselves, Docker containers are also modular: if you need to, you could build any shape you can come up with: you have all the building blocks needed. Compatibility is also not an issue, all pieces can be connected and disconnected, reused when needed. You may also change (update) a block (container) without the compatibility being affected. There may be multiple pieces of the same block available too.
@@ -30,11 +42,13 @@ Now imagine that you have a magic Lego box with a secret compartment that keeps 
 You can build whatever you like in this magic box, but you have to remember one thing: once you close the box, all your creations will disappear, except for the items in the secret compartment.
 
 **What is your preference concerning the use of Python virtualenv and Docker? When would you use one or the other?**
+
 Virtualenv generally is the better choice for more lightweight or local projects, where a simpler environment capable of running a Python application is sufficient to separately run the necessary dependencies. Similarly to Docker containers, these virtual environments are capable of running confined, separate dependencies, however, this structure is created for running Python applications and they are not as robust as Docker containers.
 
 Docker is a more complex system, capable of handling applications outside of Python too. It is best to use for more robust projects, where the program would be rolled out on multiple systems. It can handle multiple dependencies, including system-level ones, as well as different steps of the procedure, completely isolated. It is best to use for more demanding (non-local) deployment. 
 
 **What is the Docker build context?**
+
 The Docker build context is a set of files and directories that are sent to the Docker daemon when building a Docker image. When running a build, Docker CLI sends the contents of the specified directory (or the current directory by default) to the Docker daemon as the context. It's important to keep the build context minimal to speed up the build process.
 
 **How can you assess the quality of a python package on PyPI?**
@@ -42,6 +56,11 @@ The Docker build context is a set of files and directories that are sent to the 
 We can assess the quality of a Python package on PyPI by first searching for and installing packages based on relevance, updates, and Python version compatibility; this is followed by reviewing the package's details on PyPI for legitimacy and project relevance. Additionally, we can explore the package's GitHub repository for community engagement indicators like stars, forks, and pull requests, and use Libraries.io for detailed statistics like dependencies, release history, and SourceRank score. And it's important to verify that the package's licence is suitable for our intended use, particularly for commercial or shared projects.  
 
 ## Task 3
+
+The `mnist_ convnet` script incorporates essential elements for a basic machine learning workflow with Keras and TensorFlow.  
+It loads the MNIST dataset using keras.datasets.mnist.load_data() and defines a Sequential model with convolutional and dense layers. The model is compiled with the Adam optimizer and categorical crossentropy loss function. Training is conducted using model.fit() with a specific batch size and number of epochs.  
+In order  to save the trained model to a .h5 file, we added model.save (model.h5) after training the model (module_ io), to load a model from a .h5 file, we added keras.models.load_ model(model.h5) in module_io.  
+Also this model can make predictions on new data. By applying the model.predict(x_test) method, it generates class probabilities for each of the ten digit classes. These probabilities indicate the likelihood of each test image belonging to a particular digit class.
 
 ## Task 4
 
