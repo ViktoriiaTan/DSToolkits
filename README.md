@@ -1,10 +1,10 @@
-## Convolutional neural network on the MNIST dataset
+# Convolutional neural network on the MNIST dataset
 
 This project focuses on setting up and running a Convolutional Neural Network (mnist_convnet.py) to recognize handwritten digits using the MNIST dataset.
 
-### Instructions to run the script
+## Instructions to run the script:
 
-#### Python installation
+### Python installation
 
 Ensure Python (version 3.9 - 3.11) is already installed on your system.   
 To check the version installed, use the command:  
@@ -13,27 +13,24 @@ To check the version installed, use the command:
 If Python is not installed, follow the instructions below based on your operating system:  
 
 **Ubuntu Linux:**
-
 `sudo apt update`  
 `sudo apt install python3`  
 `sudo apt install python3-pip`  
 
 **MacOS:**
-
 You can download Python from [here](https://www.python.org/downloads/macos/).   
 Open terminal and verify the installation:  
 `python3 --version`  
 `pip3 –version`  
 
 **Windows:**
-
 You can download the appropriate version of Python for your system from the this [link](https://www.python.org/downloads/windows/).  
 Ensure that you check the box that says "Add Python 3.x to PATH" before clicking "Install Now".  
 Open command prompt and verify the installation:  
 `python --version`  
 `pip –version`  
 
-#### Git installation
+### Git installation
 
 1. Make sure Git is installed on your system: `git --version`  
 If you don’t have Git installed, you can download it from [here](https://git-scm.com/downloads).  
@@ -43,12 +40,12 @@ If you don’t have Git installed, you can download it from [here](https://git-s
 2. Clone the repository from GitHub to your local machine:  
 `git clone https://github.com/ViktoriiaTan/DSToolkits.git`  
 
-#### Docker installation 
+### Docker installation 
 
 Ensure Docker is installed. Check with `docker --version`.  
 If not installed, follow the instructions from [Docker's official website](https://docs.docker.com/engine/install/)  
 
-#### Setup and execution
+### Setup and execution
 
 **Dockerized environment (recommended):**
 
@@ -66,9 +63,7 @@ If not installed, follow the instructions from [Docker's official website](https
 
 **For Windows:** `.\myenv\Scripts\activate`  
 
-2. Install the necessary packages listed in requirements.txt:  
-
-`pip install -r requirements.txt`  
+2. Install the necessary packages listed in requirements.txt:     `pip install -r requirements.txt`  
 
 3. Run the script:    `python3 main.py`  
 
