@@ -13,7 +13,9 @@ Dockerfile
 
 # Exclude data files that are not needed for the Docker image
 data/
+report/
+*.md
 
 # Exclude virtual environment files
 venv/
-
+myenv/
