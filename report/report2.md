@@ -19,9 +19,9 @@ This approach keeps our main branch organized and ensures that everyone works wi
 A hash function is a special type of function in computing for implementing security. It takes input (which can be anything from a string of text to a file) and converts it into a fixed-size string of characters. This output, typically a sequence of numbers and letters (hash value/ hash code).  
 Hash function is widely used:  
 - Cryptocurrency (to secure transactions)  
-- Password verification for authentication (websites hash and store passwords. During login, they compare the hash of the entered password with the stored hash for security)  
+- Password verification for authentication (websites hash and store passwords and then during login, they compare the hash of the entered password with the stored hash for security)  
 - Data and file integrity check (check the integrity of data or files. Checking the hash of an uploaded file against its original ensures that it hasn’t been modified)  
-- Digital signature (maintain the integrity of digital signatures. Data is hashed and encrypted for signing, and this process is reversed for verification)  
+- Digital signature (maintain the integrity of digital signatures; data is hashed and encrypted for signing and this process is reversed for verification)  
 
 **What is a Python module, package and script? How do they differ from one another?**
 
@@ -59,7 +59,7 @@ We can assess the quality of a Python package on PyPI by first searching for and
 
 The "mnist_ convnet" script incorporates essential elements for a basic machine learning workflow with Keras and TensorFlow.  
 It loads the MNIST dataset using `keras.datasets.mnist.load_data()` and defines a Sequential model with convolutional and dense layers. The model is compiled with the Adam optimizer and categorical crossentropy loss function. Training is conducted using `model.fit()` with a specific batch size and number of epochs.  
-In order  to save the trained model to a .h5 file, we added `model.save(model.h5)` after training the model (module_ io), to load a model from a .h5 file, we added keras.models.load_ model(model.h5) in module_io.  
+In order  to save the trained model to a .h5 file, we added `model.save(model.h5)` after training the model (module_ io), to load a model from a .h5 file, we added `keras.models.load_ model(model.h5)` in module_io.  
 Also this model can make predictions on new data. By applying the `model.predict(x_test)` method, it generates class probabilities for each of the ten digit classes. These probabilities indicate the likelihood of each test image belonging to a particular digit class.
 
 ## Task 4
@@ -71,7 +71,6 @@ For example, isolating the model_architect  allows for easy experimentation with
 Structure of the code:
 
 Main script main.py runs the whole process: loads data, processes it, builds and trains the model, saves it and makes predictions.  
-
 Modules:
 * Data handling (module_io.py): loads the MNIST data and handles saving/loading models.  
 * Data preprocessing (data_prepar.py): prepares the data for the model (like scaling images).  
@@ -79,7 +78,7 @@ Modules:
 * Model training (train.py): code to train the model.  
 * Evaluation and prediction (eval_predict.py): used for testing the model and making predictions.  
 
-
+This modularization is our strategic decision and can vary among programmers, reflecting different approaches to organizing and segmenting code for optimal clarity and functionality.
 ## Task 5
 
 We created a requirements.txt file for our code during milestone1. We identified all the necessary packages our project relies on, including their specific versions there.  
@@ -95,12 +94,12 @@ We set up a virtual environment named "myenv" in our project directory using Pyt
 
 ## Task 6
 
-Initially, we tried using the Tensorflow image from Docker Hub, but it was unable to handle the requirements file. 
+Initially, we tried using the Tensorflow image from Docker Hub, but it was unable to handle the requirements file (as we understood because it's built for amd64 architecture and we have an ARM-based Mac). 
 Then we changed to the Python image. 
 We chose the image that uses Python version 3.10, checked the requirements for compatibility and built the container.
 We also added a Dockerignore file.
 
-## References:
+### References:
 
 1. https://resources.infosecinstitute.com/topics/cryptography/introduction-to-hash-functions/
 2. https://pypi.org/project/
