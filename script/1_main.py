@@ -8,6 +8,7 @@ from data_prepar import preproc
 from model_architect import create_model
 from train import train_model
 from eval_predict import eval_model, predict
+import psycopg2
 
 
 def main():
@@ -44,6 +45,25 @@ def main():
 
     # Print the first ten predictions
     print("First ten predictions:", predictions[:10])
+    
+    # Connect to the PostgreSQL server
+    conn = psycopg2.connect(
+        host="postrges",
+        database="milestone_3",
+        user="admin",
+        password="secret"
+    )
+    cursor = conn.cursor()
+
+    # Save the model to the "models" table
+    with open(model_file, 'rb') as f:
+            model_data = f.read()
+            cursor.execute("INSERT INTO models (model_data) VALUES (%s) RETURNING id;", (psycopg2.Binary(model_data),))
+            model_id = cursor.fetchone()[0]
+            conn.commit()
+
+        # Close the database connection
+    conn.close()
 
 
 if __name__ == "__main__":
