@@ -57,11 +57,39 @@ However, if we use a Docker volume for our database, the situation changes. With
 
 ## Task 3
 
-**How do you need to represent/transform image data to save it to a relational database?**  
+**a) How do you need to represent/transform image data to save it to a relational database?**  
 
+To represent and transform image data for saving in a relational database, we need to convert the images into a binary format, because relational databases are optimized for text and numbers, not complex data types like images. And in order to store an image, we must convert it into a binary format (a sequence of bytes).
+
+Workflow steps:
+
+* Using an image processing library: we employed a library like Python's Pillow to handle and process the image data.
+* Conversion to binary: Transformed the image into a byte array. This conversion makes it compatible with the storage formats in relational databases.
+* Storing in the database: Saved the binary data in a column with a data type suited for binary data, such as BYTEA in PostgreSQL.
+
+
+**b)Explain how you would define your relational database tables in terms of their attributes to save your data. What kind of data types could you use? What additional relational database table attributes might make sense to easily query your data?**
+
+The MNIST dataset, comprising 28x28 pixel grayscale images of handwritten digits, each labeled with a digit from 0 to 9, is divided into a training set of 60,000 examples and a test set of 10,000 examples.  
+
+The database schema for this dataset could be organized as follows:  
+
+* The Images table is structured to uniquely identify each image with an id column, which serves as the primary key and is assigned the SERIAL data type. This table includes an image_data column for storing images in binary format, utilizing the BYTEA data type. To differentiate between the training and test sets within the dataset, a set_type column is incorporated, using the VARCHAR data type.
+
+* In addition, the schema features a Labels table. This table has an image_id column that acts as a foreign key, referencing the id in the Images Table, and is characterized by the INTEGER data type. The table also includes a label column that records the numerical value each image represents, utilizing the INTEGER data type.  
+
+To enhance the database's querying capabilities, particularly for datasets with more varied content, additional attributes can be added. These include a category or description column (using either VARCHAR or TEXT) to detail the content of each image, a timestamp column to log when images are added to the database (using TIMESTAMP), and a source column (using VARCHAR) to identify the origin of the images. These additions facilitate more efficient queries, such as easily retrieving all images labeled 'giraffe' with a simple SELECT query based on the category or description field.
 ## Task 4
 
 #### Additional: What is an SQL Injection Attack and how can you protect yourself?
+
+An SQL Injection Attack is a cybersecurity threat where attackers manipulate a website's database by inserting harmful SQL code into an application's input fields. To protect against this:  
+
+* Use prepared statements: These are SQL queries with placeholders, preventing direct user input insertion.
+* Validate user input: Ensure all user input is checked for malicious code.
+* Limit database permissions: Restrict what your application can do in the database (like only reading data).
+* Regularly update software: Keep all software, including databases, up to date to patch vulnerabilities.
+* Use Web application firewalls: These can help detect and block SQL Injection attempts.
 
 ### References:
 
