@@ -4,6 +4,9 @@ FROM python:3.10
 # Setting working directory inside the container
 WORKDIR /app
 
+# Copy wait-for-it.sh
+COPY wait-for-it.sh /app/
+
 # Copy requirements.txt 
 COPY script/requirements.txt ./
 
@@ -14,4 +17,4 @@ RUN pip install --no-cache-dir -r  requirements.txt
 COPY script/ .
 
 # Run the application
-CMD ["python", "main.py"]
+CMD ["./wait-for-it.sh", "postgres:5432", "--", "python", "main.py"]
