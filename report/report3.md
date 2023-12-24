@@ -81,6 +81,12 @@ The database schema for this dataset could be organized as follows:
 To enhance the database's querying capabilities, particularly for datasets with more varied content, additional attributes can be added. These include a category or description column (using either VARCHAR or TEXT) to detail the content of each image, a timestamp column to log when images are added to the database (using TIMESTAMP), and a source column (using VARCHAR) to identify the origin of the images. These additions facilitate more efficient queries, such as easily retrieving all images labeled 'giraffe' with a simple SELECT query based on the category or description field.
 ## Task 4
 
+A docker-compose.yml file along with the wait-for-it.sh (5) have been created, and Dockerfile has been updated. 
+The script 1_main.py got updated with connection to PostgreSQL.
+One of our machines had issues with permissions, so a temporary directory was used to run the docker builds. 
+However, during the docker compose building process, since the process needed to be restarted quite a few times and all the cache ad volumes needed to be deleted, now we are facing an issue.
+docker-compose build executes correctly, but docker-compose up creates an error: incomplete startup packet for postgres, which has been wokring previously.
+
 #### Additional: What is an SQL Injection Attack and how can you protect yourself?
 
 An SQL Injection Attack is a cybersecurity threat where attackers manipulate a website's database by inserting harmful SQL code into an application's input fields. To protect against this:  
@@ -97,3 +103,5 @@ An SQL Injection Attack is a cybersecurity threat where attackers manipulate a w
 2. https://www.freecodecamp.org/news/what-is-localhost/
 3. https://www.postgresqltutorial.com/postgresql-python/connect/
 4. https://www.postgresql.org/docs/12/datatype-binary.html#id-1.5.7.12.9
+5. https://github.com/jirkapinkas/spring-boot-postgresql-docker-compose/blob/master/src/main/docker/wait-for-it.sh
+
