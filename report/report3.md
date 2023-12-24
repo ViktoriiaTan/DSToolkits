@@ -37,7 +37,7 @@ PostgreSQL is an SQL database, using SQL for data management and organizing data
 
 **b)**
 To complete this task, we started by setting up a custom Docker network called "mynetwork." This was important for making sure the PostgreSQL database and PGAdmin containers could talk to each other easily.  
-Next, we used Docker to pull down the PostgreSQL version 14.0 image. Once we had the image, we ran a PostgreSQL container on "mynetwork." During this setup, we created a user named "student" with a password for the database.
+Next, we used Docker to pull down the PostgreSQL version 14.0 image. Once we had the image, we ran a PostgreSQL container on "mynetwork." During this setup, we created a user named "student" with a password for the database.  
 We also needed Python to work with PostgreSQL, so we installed the psycopg2 package. This package is a bridge between Python and PostgreSQL, letting our Python scripts interact with the database server.  
 Then, we wrote a Python script called jokes.py. The script's job was to connect to PostgreSQL, make a new database named ms3_jokes, add a table called jokes, put a joke in it, and then get the joke back out to show it.  
 For the database management part, we set up PGAdmin in another Docker container on the same network. This made managing the database easier.  
@@ -59,8 +59,13 @@ However, if we use a Docker volume for our database, the situation changes. With
 
 **How do you need to represent/transform image data to save it to a relational database?**  
 
-#### What is an SQL Injection Attack and how can you protect yourself?
+## Task 4
+
+#### Additional: What is an SQL Injection Attack and how can you protect yourself?
 
 ### References:
 
-1. 
+1. https://www.postgresql.org/about/
+2. https://www.freecodecamp.org/news/what-is-localhost/
+3. https://www.postgresqltutorial.com/postgresql-python/connect/
+4. https://www.postgresql.org/docs/12/datatype-binary.html#id-1.5.7.12.9
