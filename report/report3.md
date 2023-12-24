@@ -61,6 +61,12 @@ However, if we use a Docker volume for our database, the situation changes. With
 
 ## Task 4
 
+A docker-compose.yml file along with the wait-for-it.sh (5) have been created, and Dockerfile has been updated. 
+The script 1_main.py got updated with connection to PostgreSQL.
+One of our machines had issues with permissions, so a temporary directory was used to run the docker builds. 
+However, during the docker compose building process, since the process needed to be restarted quite a few times and all the cache ad volumes needed to be deleted, now we are facing an issue.
+docker-compose build executes correctly, but docker-compose up creates an error: incomplete startup packet for postgres, which has been wokring previously.
+
 #### Additional: What is an SQL Injection Attack and how can you protect yourself?
 
 ### References:
@@ -69,3 +75,5 @@ However, if we use a Docker volume for our database, the situation changes. With
 2. https://www.freecodecamp.org/news/what-is-localhost/
 3. https://www.postgresqltutorial.com/postgresql-python/connect/
 4. https://www.postgresql.org/docs/12/datatype-binary.html#id-1.5.7.12.9
+5. https://github.com/jirkapinkas/spring-boot-postgresql-docker-compose/blob/master/src/main/docker/wait-for-it.sh
+
