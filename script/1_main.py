@@ -48,7 +48,7 @@ def main():
     
     # Connect to the PostgreSQL server
     conn = psycopg2.connect(
-        host="postrges",
+        host="postgres",
         database="milestone_3",
         user="admin",
         password="secret"
