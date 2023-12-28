@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["./wait-for-it.sh", "postgres:5432", "--", "bash", "-c", "python init_db.py && python main.py"]
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "bash", "-c", "python init_db.py && python 1_main.py"]
     depends_on:
       - postgres
     volumes:
