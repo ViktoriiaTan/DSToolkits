@@ -87,6 +87,14 @@ One of our machines had issues with permissions, so a temporary directory was us
 However, during the docker compose building process, since the process needed to be restarted quite a few times and all the cache ad volumes needed to be deleted, now we are facing an issue.
 docker-compose build executes correctly, but docker-compose up creates an error: incomplete startup packet for postgres, which has been wokring previously.
 
+After continuing to face issues, a new virtual machine has been set up from scratch. After reinstalling all the necessary dependencies, there were still issues with permissions, which were solved by temporary directories. 
+
+A new issue emerged, namely "Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "./wait-for-it.sh": permission denied: unknown". This was solved by updating the last line in the Dockerfile and removing the quotation marks.
+
+Then finally, docker compose up was running, when a new issue emerged:
+dstoolkits-python-app-1 exited with code 0
+
+
 #### Additional: What is an SQL Injection Attack and how can you protect yourself?
 
 An SQL Injection Attack is a cybersecurity threat where attackers manipulate a website's database by inserting harmful SQL code into an application's input fields. To protect against this:  
