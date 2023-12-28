@@ -17,4 +17,5 @@ RUN pip install --no-cache-dir -r  requirements.txt
 COPY script/ .
 
 # Run the application
-CMD ["./wait-for-it.sh", "postgres:5432", "--", "python", "main.py"]
+CMD ./wait-for-it.sh postgres:5432 -- python 1_main.py
+
