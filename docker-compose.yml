@@ -16,7 +16,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["./wait-for-it.sh", "postgres:5432", "--", "bash", "-c", "python init_db.py && python 1_main.py"]
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "bash", "-c", "python script/1_main.py"]
+    depends_on:
+      - postgres
+    volumes:
+      - model_volume:/app/model
+
+  init-script:
+    build:
+      context: .
+      dockerfile: Dockerfile_init
     depends_on:
       - postgres
     volumes:
@@ -25,4 +34,3 @@ services:
 volumes:
   postgres-data:
   model_volume:
-

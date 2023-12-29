@@ -78,4 +78,9 @@ def main():
 
 
 if __name__ == "__main__":
+    print("Starting main script...")
     main()
+    print("Main script completed.")
+    while True:
+        time.sleep(10)
+
