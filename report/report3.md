@@ -79,6 +79,7 @@ The database schema for this dataset could be organized as follows:
 * In addition, the schema features a Labels table. This table has an image_id column that acts as a foreign key, referencing the id in the Images Table, and is characterized by the INTEGER data type. The table also includes a label column that records the numerical value each image represents, utilizing the INTEGER data type.  
 
 To enhance the database's querying capabilities, particularly for datasets with more varied content, additional attributes can be added. These include a category or description column (using either VARCHAR or TEXT) to detail the content of each image, a timestamp column to log when images are added to the database (using TIMESTAMP), and a source column (using VARCHAR) to identify the origin of the images. These additions facilitate more efficient queries, such as easily retrieving all images labeled 'giraffe' with a simple SELECT query based on the category or description field.
+
 ## Task 4
 
 A docker-compose.yml file along with the wait-for-it.sh (5) have been created, and Dockerfile has been updated. 
@@ -89,10 +90,18 @@ docker-compose build executes correctly, but docker-compose up creates an error:
 
 After continuing to face issues, a new virtual machine has been set up from scratch. After reinstalling all the necessary dependencies, there were still issues with permissions, which were solved by temporary directories. 
 
-A new issue emerged, namely "Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "./wait-for-it.sh": permission denied: unknown". This was solved by updating the last line in the Dockerfile and removing the quotation marks.
+A new issue emerged, namely "Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "./wait-for-it.sh": permission denied: unknown". This was solved by updating the CMD line in the Dockerfile.
 
-Then finally, docker compose up was running, when a new issue emerged:
-dstoolkits-python-app-1 exited with code 0
+Upon running the docker compose up --build command, the postgres part had a warning: incomplete startup packet. After some googling, we learned that this can be ignored.
+
+Then finally, docker compose up was running, containers are ready,  when a new issue emerged:
+dstoolkits-python-app-1 exited with code 0.
+Therefore, the application exsits and since there are no outputs from 1_main.py, we looked at the script itself. After setting up a virtual environment and running requirements.txt and 1_main.py in there, we ran into this output: Segmentation fault (core dumped).
+
+Accordingly, we started debugging with gdb, which showed an issue within TensorFlow during the optimization of a loop.
+We are not sure where this issue is originating, since the tensorflow part of the code has not been changed at all since the last milestone. 
+
+The compose command has been tried on multiple virtual machines, in fact, we have started from scratch many times to make sure it's not the setup that is causing issues.
 
 
 #### Additional: What is an SQL Injection Attack and how can you protect yourself?
