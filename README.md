@@ -43,16 +43,15 @@ If you don’t have Git installed, you can download it from [here](https://git-s
 ### Docker installation 
 
 Ensure Docker is installed. Check with `docker --version`.  
-If not installed, follow the instructions from [Docker's official website](https://docs.docker.com/engine/install/)  
+If not installed, follow the instructions from [Docker's official website](https://docs.docker.com/engine/install/)  and [for the compose plugin](https://docs.docker.com/compose/install/linux/#install-using-the-repository)
 
 ### Setup and execution
 
 **Dockerized environment (recommended):**
 
 1. Navigate to the project directory:`cd DSToolkits`   
-2. Build the Docker image: `docker build -t my-python-app .`  
-3. Run the Docker container: `docker run my-python-app`  
-
+2. Build and run the Docker images: `docker compose run --build`  
+------------------------------------------------------------------------------------
 **Local environment (optional):**
 
 1. Create Virtual Environment (optional but recommended):  
