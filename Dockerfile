@@ -4,21 +4,21 @@ FROM python:3.10
 # Setting working directory inside the container
 WORKDIR /app
 
-# Copy wait-for-it.sh
-COPY wait-for-it.sh /app/
+# Install netcat (nc)
+RUN apt-get update && apt-get install -y netcat-openbsd
 
-# Copy requirements.txt 
-COPY script/requirements.txt ./
+# Copy and install requirements
+COPY script/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r  requirements.txt
+# Copy application scripts
+COPY . .
 
-# Copy the rest of the application
-COPY script/ .
+# Copy wait-for-it.sh into the image
+COPY wait-for-it.sh app/wait-for-it.sh
+RUN chmod +x app/wait-for-it.sh
 
-# Run the application
-CMD  ["python3", "script/1_main.py","tail", "-f", "/dev/null"]
-
+CMD ["/app/wait-for-it.sh", "postgres:5432", "python3", "/app/script/1_main.py"]
 
 
 

@@ -50,7 +50,7 @@ If not installed, follow the instructions from [Docker's official website](https
 **Dockerized environment (recommended):**
 
 1. Navigate to the project directory:`cd DSToolkits`   
-2. Build and run the Docker images: `docker compose run --build`  
+2. Build and run the Docker images: `docker-compose up --build`  
 ------------------------------------------------------------------------------------
 **Local environment (optional):**
 

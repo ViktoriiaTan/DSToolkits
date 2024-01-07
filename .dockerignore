@@ -15,6 +15,7 @@ Dockerfile
 data/
 report/
 *.md
+path/
 
 # Exclude virtual environment files
 venv/

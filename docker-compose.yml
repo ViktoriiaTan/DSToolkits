@@ -1,40 +1,40 @@
-version: '2.7'
+version: '3.8'
+
 services:
   postgres:
     image: postgres:14.0
-    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: milestone_3
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secret
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d milestone_3 -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tantsuraviktoria@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
     ports:
-      - "5432:5432"
+      - "5050:80"
 
-  init-script:
-    build:
-      context: .
-      dockerfile: Dockerfile_init
-    depends_on:
-      - postgres
-    volumes:
-      - model_volume:/app/model
-
-
-  
   python-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: ["./wait-for-it.sh", "postgres:5432", "--", "bash", "-c", "python3 script/1_main.py"]
-    depends_on:
-      - postgres
+    build: .
     volumes:
-      - model_volume:/app/model
-
- 
+      - .:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_NAME=milestone_3
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=secret
 
 volumes:
-  postgres-data:
-  model_volume:
+  postgres_data:
