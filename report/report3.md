@@ -101,11 +101,11 @@ Therefore, the application exsits and since there are no outputs from '1_main.py
 Accordingly, we started debugging with gdb, which showed an issue within TensorFlow during the optimization of a loop.
 We are not sure where this issue is originating, since the tensorflow part of the code has not been changed at all since the last milestone. 
 
-The compose command has been tried on multiple virtual machines, in fact, we have started from scratch many times to make sure it's not the setup that is causing issues.
+The compose command has been tried on multiple virtual machines, in fact, we have started from scratch many times to make sure it's not the setup that is causing issues. We ended up rethinking our approach.
 
 A missing piece was the 'netcat-openbsd' utility, which is used in the 'wait-for-it.sh' script, a bash script used for waiting until a given host and port are available. It takes a host:port pair as the first argument, waits until the specified service is up, and then executes the provided command.
 
-Another missing piece was pgAdmin Service, a tool for administration and management for PostgreSQL databases.
+We decided to add pgAdmin Service, a tool for administration and management for PostgreSQL databases.
 
 We also added a healthcheck, which verifies if the PostgreSQL server is ready to accept connections. This check is performed every 20 seconds and has a timeout cap at 5 seconds, after which  the connection is considered a failure. After 5 consecutive failures the container is marked unhealthy.
 
@@ -120,9 +120,13 @@ Finally, the main script was reorgnaised and the following database structure wa
 - 'prediction_result'.
 
 There is a one-to-many relationship between 'input_data' and 'predictions'. Each entry in 'input_data' may have multiple corresponding entries in 'predictions', but each entry in 'predictions' is associated with exactly one entry in 'input_data'. 
-We chose this simple structure to match the input data with the predictions, even when multiple predictions are created. It is easily scalable if any new entries need to be added and the model can be evaluated based on the prediction ids. 
+We chose this simple structure to separate the input data from the predictions. The IDs clearly connect the input with the output, even when multiple predictions are created. This also provides simple data retrieval. It is easily scalable if any new entries need to be added and the model can be evaluated based on the prediction IDs. 
 
-![Alt text](<Screenshot 2024-01-19 at 16.27.58.png>)
+
+![Entity-Relationship (ER) Diagram](ERdiagram.png)
+
+
+
 
 #### Additional: What is an SQL Injection Attack and how can you protect yourself?
 
