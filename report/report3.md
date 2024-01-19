@@ -82,8 +82,8 @@ To enhance the database's querying capabilities, particularly for datasets with 
 
 ## Task 4
 
-A docker-compose.yml file along with the wait-for-it.sh (5) have been created, and Dockerfile has been updated. 
-The script 1_main.py got updated with connection to PostgreSQL.
+A 'docker-compose.yml' file along with the wait-for-it.sh (5) have been created, and Dockerfile has been updated. 
+The script '1_main.py' got updated with connection to PostgreSQL.
 One of our machines had issues with permissions, so a temporary directory was used to run the docker builds. 
 However, during the docker compose building process, since the process needed to be restarted quite a few times and all the cache ad volumes needed to be deleted, now we are facing an issue.
 docker-compose build executes correctly, but docker-compose up creates an error: incomplete startup packet for postgres, which has been wokring previously.
@@ -92,17 +92,37 @@ After continuing to face issues, a new virtual machine has been set up from scra
 
 A new issue emerged, namely "Error response from daemon: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "./wait-for-it.sh": permission denied: unknown". This was solved by updating the CMD line in the Dockerfile.
 
-Upon running the docker compose up --build command, the postgres part had a warning: incomplete startup packet. After some googling, we learned that this can be ignored.
+Upon running the `docker compose up --build` command, the postgres part had a warning: incomplete startup packet. After some googling, we learned that this can be ignored.
 
 Then finally, docker compose up was running, containers are ready,  when a new issue emerged:
-dstoolkits-python-app-1 exited with code 0.
-Therefore, the application exsits and since there are no outputs from 1_main.py, we looked at the script itself. After setting up a virtual environment and running requirements.txt and 1_main.py in there, we ran into this output: Segmentation fault (core dumped).
+"dstoolkits-python-app-1 exited with code 0".
+Therefore, the application exsits and since there are no outputs from '1_main.py', we looked at the script itself. After setting up a virtual environment and running requirements.txt and '1_main.py' in there, we ran into this output: "Segmentation fault (core dumped)".
 
 Accordingly, we started debugging with gdb, which showed an issue within TensorFlow during the optimization of a loop.
 We are not sure where this issue is originating, since the tensorflow part of the code has not been changed at all since the last milestone. 
 
 The compose command has been tried on multiple virtual machines, in fact, we have started from scratch many times to make sure it's not the setup that is causing issues.
 
+A missing piece was the 'netcat-openbsd' utility, which is used in the 'wait-for-it.sh' script, a bash script used for waiting until a given host and port are available. It takes a host:port pair as the first argument, waits until the specified service is up, and then executes the provided command.
+
+Another missing piece was pgAdmin Service, a tool for administration and management for PostgreSQL databases.
+
+We also added a healthcheck, which verifies if the PostgreSQL server is ready to accept connections. This check is performed every 20 seconds and has a timeout cap at 5 seconds, after which  the connection is considered a failure. After 5 consecutive failures the container is marked unhealthy.
+
+Finally, the main script was reorgnaised and the following database structure was introduced:
+'input_data' table:
+- 'id' (primary key)
+- 'image_data'
+
+'predictions' table:
+- 'id' (primary key)
+- 'input_data_id' (foreign key, referencing 'id' from 'input_data') 
+- 'prediction_result'.
+
+There is a one-to-many relationship between 'input_data' and 'predictions'. Each entry in 'input_data' may have multiple corresponding entries in 'predictions', but each entry in 'predictions' is associated with exactly one entry in 'input_data'. 
+We chose this simple structure to match the input data with the predictions, even when multiple predictions are created. It is easily scalable if any new entries need to be added and the model can be evaluated based on the prediction ids. 
+
+![Alt text](<Screenshot 2024-01-19 at 16.27.58.png>)
 
 #### Additional: What is an SQL Injection Attack and how can you protect yourself?
 
@@ -121,4 +141,6 @@ An SQL Injection Attack is a cybersecurity threat where attackers manipulate a w
 3. https://www.postgresqltutorial.com/postgresql-python/connect/
 4. https://www.postgresql.org/docs/12/datatype-binary.html#id-1.5.7.12.9
 5. https://github.com/jirkapinkas/spring-boot-postgresql-docker-compose/blob/master/src/main/docker/wait-for-it.sh
+6. https://medium.com/@saklani1408/configuring-healthcheck-in-docker-compose-3fa6439ee280
+
 
