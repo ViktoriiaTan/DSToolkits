@@ -9,10 +9,41 @@ from model_architect import create_model
 from train import train_model
 from eval_predict import eval_model, predict
 import psycopg2
+import numpy as np
+import pickle
 
+
+def init_db(cursor):
+    # Create tables if they don't exist
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS input_data (
+            id SERIAL PRIMARY KEY,
+            image_data BYTEA
+        );
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS predictions (
+            id SERIAL PRIMARY KEY,
+            input_data_id INTEGER REFERENCES input_data(id),
+            prediction_result TEXT
+        );
+    """)
+    
 
 def main():
     model_file = '../data/mnist_model.h5'
+    # Database connection
+    conn = psycopg2.connect(
+        host="postgres",
+        database="milestone_3",
+        user="admin",
+        password="secret"
+    )
+    cursor = conn.cursor()
+
+    # Initialize database
+    init_db(cursor)
+    
     # Load the data
     print("Loading data...")
     (x_train, y_train), (x_test, y_test) = load_mnist()
@@ -46,41 +77,31 @@ def main():
 
     print(f"Test Loss: {test_loss}")
     print(f"Test Accuracy: {test_accuracy}")
+    
+    # Serialize and save a sample to the database
+    sample_data = pickle.dumps(x_test[0])
+    cursor.execute("INSERT INTO input_data (image_data) VALUES (%s) RETURNING id;", (psycopg2.Binary(sample_data),))
+    sample_id = cursor.fetchone()[0]
+    conn.commit()
 
+    # Load and deserialize the sample
+    cursor.execute("SELECT image_data FROM input_data WHERE id = %s;", (sample_id,))
+    loaded_sample_data = cursor.fetchone()[0]
+    loaded_sample = pickle.loads(loaded_sample_data)
+    
     # Make predictions
     print("Making predictions...")
-    predictions = predict(model, x_test)
+    prediction = predict(model, np.array([loaded_sample]))
+    print("Prediction:", prediction)
 
-    # Print the first ten predictions
-    print("First ten predictions:", predictions[:10])
-    
-    # Connect to the PostgreSQL server
-    print("Connecting to PostgreSQL...")
-    conn = psycopg2.connect(
-        host="postgres",
-        database="milestone_3",
-        user="admin",
-        password="secret"
-    )
-    cursor = conn.cursor()
+    # Save the prediction result
+    cursor.execute("INSERT INTO predictions (input_data_id, prediction_result) VALUES (%s, %s);", (sample_id, str(prediction)))
+    conn.commit()
 
-    # Save the model to the "models" table
-    print("Saving model to database...")
-    with open(model_file, 'rb') as f:
-            model_data = f.read()
-            cursor.execute("INSERT INTO models (model_data) VALUES (%s) RETURNING id;", (psycopg2.Binary(model_data),))
-            model_id = cursor.fetchone()[0]
-            conn.commit()
-
-        # Close the database connection
-            print("Closing connection...")
+    # Close the database connection
+    cursor.close()
     conn.close()
 
 
 if __name__ == "__main__":
-    print("Starting main script...")
     main()
-    print("Main script completed.")
-    while True:
-        time.sleep(10)
-
