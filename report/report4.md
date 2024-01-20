@@ -21,7 +21,11 @@ Metrics provide a way to objectively measure the effectiveness of a model in mak
 
 **What is Precision and Recall? Why is there often a Trade-off between them?**
 
-**What is AUROC Metric?**
+**What is AUC-ROC Metric?**
+
+AUC - ROC curve is a performance measurement for the classification problems at various threshold settings.  
+ROC is a probability curve and AUC represents the degree or measure of separability. It tells how much the model is capable of distinguishing between classes.   
+Higher the AUC, the better the model is at predicting 0 classes as 0 and 1 classes as 1.
 
 **What is a Confusion Matrix?**
 
