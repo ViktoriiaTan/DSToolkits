@@ -16,6 +16,7 @@ data/
 report/
 *.md
 path/
+.env
 
 # Exclude virtual environment files
 venv/
