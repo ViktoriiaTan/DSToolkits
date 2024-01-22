@@ -16,7 +16,7 @@ from eval_predict import eval_model, predict
 
 def main():
     # Initialize Weights & Biases
-    wandb.init(project="mnist_digit_classification", entity="tantsuraviktoria", config={"architecture": "Morebatches"})
+    wandb.init(project="mnist_digit_classification", entity="tantsuraviktoria")
     
     model_file = '../data/mnist_model.h5'
     
@@ -42,7 +42,7 @@ def main():
     history = train_model(model,
     x_train, y_train,
     epochs=10,
-    batch_size=256,
+    batch_size=128,
     callbacks=[WandbCallback()]
     )
 
@@ -73,6 +73,26 @@ def main():
     # Log the F1 score to Weights & Biases
     wandb.log({'f1_score': f1})
     
+    # Log the confusion matrix
+    wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
+                                                   y_true=y_true, 
+                                                   preds=preds,
+                                                   class_names=[str(i) for i in range(10)])})
+    
+    # Convert predictions to single column
+    if y_pred.ndim > 1 and y_pred.shape[1] > 1:
+        # Convert one-hot encoded predictions to class indices
+        y_pred = np.argmax(y_pred, axis=1).reshape(-1, 1)
+        
+    # Create a W&B artifact for predictions
+    predictions_artifact = wandb.Artifact('predictions', type='predictions')
+    
+    # Add the predictions to the artifact
+    predictions_table = wandb.Table(data=y_pred, columns=["Predictions"])
+    predictions_artifact.add(predictions_table, "prediction_results")
+    
+    # Log the artifact to W&B
+    wandb.log_artifact(predictions_artifact)
     
 if __name__ == "__main__":
     main()
