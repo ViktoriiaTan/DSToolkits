@@ -2,18 +2,18 @@
 The core module for organizing data loading, model creation,
 training, and evaluation.
 """
+import numpy as np
+import pickle
+import wandb
+import os
 from wandb.keras import WandbCallback
-
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import f1_score
 from module_io import load_mnist, save_modelh5, load_modelh5
 from data_prepar import preproc
 from model_architect import create_model
 from train import train_model
 from eval_predict import eval_model, predict
-import psycopg2
-import numpy as np
-import pickle
-import wandb
-import os
 
 
 def main():
@@ -59,17 +59,25 @@ def main():
 
     # Load the model
     print("Loading model...")
-    model = load_model("model.h5")
+    model = load_modelh5("model.h5")
     
     # Evaluate the model
     print("Evaluating model...")
     test_loss, test_accuracy = eval_model(model, x_test, y_test)
     
-    wandb.log({"Test Loss": test_loss, "Test Accuracy": test_accuracy})
+    # Make predictions
+    y_pred = model.predict(x_test)
+    
+    # Convert predictions to label indices if they're in a one-hot encoded format
+    preds = np.argmax(y_pred, axis=1)
+    y_true = np.argmax(y_test, axis=1)
+    
+    # Calculate F1 Score
+    f1 = f1_score(y_true, preds, average='weighted')
 
-
-    print(f"Test Loss: {test_loss}")
-    print(f"Test Accuracy: {test_accuracy}")
-
+    # Log the F1 score to Weights & Biases
+    wandb.log({'f1_score': f1})
+    
+    
 if __name__ == "__main__":
     main()
