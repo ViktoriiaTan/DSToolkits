@@ -3,4 +3,4 @@ numpy==1.23.5
 tensorflow==2.14.0
 psycopg2-binary==2.9.9
 wandb==0.16.2
-scikit-learn
+scikit-learn==1.4.0
