@@ -16,7 +16,7 @@ from eval_predict import eval_model, predict
 
 def main():
     # Initialize Weights & Biases
-    wandb.init(project="mnist_digit_classification", entity="tantsuraviktoria", config={"architecture": "Lessbatches"})
+    wandb.init(project="mnist_digit_classification", entity="tantsuraviktoria", config={"architecture": "Morebatches"})
     
     model_file = '../data/mnist_model.h5'
     
@@ -42,7 +42,7 @@ def main():
     history = train_model(model,
     x_train, y_train,
     epochs=10,
-    batch_size=64,
+    batch_size=256,
     callbacks=[WandbCallback()]
     )
 
