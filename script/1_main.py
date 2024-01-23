@@ -2,47 +2,28 @@
 The core module for organizing data loading, model creation,
 training, and evaluation.
 """
-
+import numpy as np
+import wandb
+import os
+from wandb.keras import WandbCallback
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import f1_score
 from module_io import load_mnist, save_modelh5, load_modelh5
 from data_prepar import preproc
 from model_architect import create_model
 from train import train_model
 from eval_predict import eval_model, predict
-import psycopg2
-import numpy as np
-import pickle
 
-
-def init_db(cursor):
-    # Create tables if they don't exist
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS input_data (
-            id SERIAL PRIMARY KEY,
-            image_data BYTEA
-        );
-    """)
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS predictions (
-            id SERIAL PRIMARY KEY,
-            input_data_id INTEGER REFERENCES input_data(id),
-            prediction_result TEXT
-        );
-    """)
-    
 
 def main():
+    # Initialize Weights & Biases
+    wandb.init(project="mnist_digit_classification", entity="tantsuraviktoria")
+    
+    # Retrieve and log the Git commit hash
+    git_commit_hash = os.getenv('GIT_COMMIT_HASH', 'N/A')
+    wandb.config.update({"git_commit_hash": git_commit_hash})
+    
     model_file = '../data/mnist_model.h5'
-    # Database connection
-    conn = psycopg2.connect(
-        host="postgres",
-        database="milestone_3",
-        user="admin",
-        password="secret"
-    )
-    cursor = conn.cursor()
-
-    # Initialize database
-    init_db(cursor)
     
     # Load the data
     print("Loading data...")
@@ -61,47 +42,62 @@ def main():
 
     # Train the model
     print("Training model...")
-    train_model(model, x_train, y_train)
+    
+    # Train the model and log the metric
+    history = train_model(model,
+    x_train, y_train,
+    epochs=10,
+    batch_size=128,
+    callbacks=[WandbCallback()]
+    )
 
     # Save the model
-    print("Saving model...")
-    save_modelh5(model, model_file)
+    model.save("model.h5")
+    
+    # Upload the model to Weights & Biases
+    wandb.save("model.h5")
 
     # Load the model
     print("Loading model...")
-    model = load_modelh5(model_file)
-
+    model = load_modelh5("model.h5")
+    
     # Evaluate the model
     print("Evaluating model...")
     test_loss, test_accuracy = eval_model(model, x_test, y_test)
-
-    print(f"Test Loss: {test_loss}")
-    print(f"Test Accuracy: {test_accuracy}")
-    
-    # Serialize and save a sample to the database
-    sample_data = pickle.dumps(x_test[0])
-    cursor.execute("INSERT INTO input_data (image_data) VALUES (%s) RETURNING id;", (psycopg2.Binary(sample_data),))
-    sample_id = cursor.fetchone()[0]
-    conn.commit()
-
-    # Load and deserialize the sample
-    cursor.execute("SELECT image_data FROM input_data WHERE id = %s;", (sample_id,))
-    loaded_sample_data = cursor.fetchone()[0]
-    loaded_sample = pickle.loads(loaded_sample_data)
     
     # Make predictions
-    print("Making predictions...")
-    prediction = predict(model, np.array([loaded_sample]))
-    print("Prediction:", prediction)
+    y_pred = model.predict(x_test)
+    
+    # Convert predictions to label indices
+    preds = np.argmax(y_pred, axis=1)
+    y_true = np.argmax(y_test, axis=1)
+    
+    # Calculate F1 Score
+    f1 = f1_score(y_true, preds, average='weighted')
 
-    # Save the prediction result
-    cursor.execute("INSERT INTO predictions (input_data_id, prediction_result) VALUES (%s, %s);", (sample_id, str(prediction)))
-    conn.commit()
-
-    # Close the database connection
-    cursor.close()
-    conn.close()
-
-
+    # Log the F1 score to Weights & Biases
+    wandb.log({'f1_score': f1})
+    
+    # Log the confusion matrix
+    wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
+                                                   y_true=y_true, 
+                                                   preds=preds,
+                                                   class_names=[str(i) for i in range(10)])})
+    
+    # Convert predictions to single column
+    if y_pred.ndim > 1 and y_pred.shape[1] > 1:
+        # Convert one-hot encoded predictions to class indices
+        y_pred = np.argmax(y_pred, axis=1).reshape(-1, 1)
+        
+    # Create a W&B artifact for predictions
+    predictions_artifact = wandb.Artifact('predictions', type='predictions')
+    
+    # Add the predictions to the artifact
+    predictions_table = wandb.Table(data=y_pred, columns=["Predictions"])
+    predictions_artifact.add(predictions_table, "prediction_results")
+    
+    # Log the artifact to W&B
+    wandb.log_artifact(predictions_artifact)
+    
 if __name__ == "__main__":
     main()

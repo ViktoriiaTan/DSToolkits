@@ -4,21 +4,21 @@ FROM python:3.10
 # Setting working directory inside the container
 WORKDIR /app
 
-# Install netcat (nc)
-RUN apt-get update && apt-get install -y netcat-openbsd
-
-# Copy and install requirements
+# Install dependencies
 COPY script/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application scripts
+# Copy application code
 COPY . .
 
-# Copy wait-for-it.sh into the image
-COPY wait-for-it.sh app/wait-for-it.sh
-RUN chmod +x app/wait-for-it.sh
+# Include the .git directory(in case it's not copied from previous command)
+COPY .git .git
 
-CMD ["/app/wait-for-it.sh", "postgres:5432", "python3", "/app/script/1_main.py"]
+# Copy and set permissions for entry-point and git commit scripts
+COPY docker_entrypoint.sh get_git_commit.sh /
+RUN chmod +x /docker_entrypoint.sh /get_git_commit.sh
 
-
+# Set the entrypoint script
+ENTRYPOINT ["/docker_entrypoint.sh"]
+CMD ["python3", "/app/script/1_main.py"]
 

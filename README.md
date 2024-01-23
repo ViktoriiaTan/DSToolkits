@@ -47,11 +47,19 @@ If not installed, follow the instructions from [Docker's official website](https
 
 ### Setup and execution
 
-**Dockerized environment (recommended):**
+The code now is connected to [Weights and Biases](https://wandb.ai/tantsuraviktoria/mnist_digit_classification?workspace=user-tantsuraviktoria) for performance tracking.
 
-1. Navigate to the project directory:`cd DSToolkits`   
-2. Build and run the Docker images: `docker-compose up --build`  
-------------------------------------------------------------------------------------
+To run without WB connection, execute `python3 1_main.py`. Follow the instructions on the screen.
+
+To run the code locally with WB,
+1. Sign up to [Weights and Biases](https://wandb.ai/site). 
+2. Change the "entity" to your username in *line 20* of *_1_main.py_*.
+3. Create a '.env' file in the same folder (DSToolkits) using your API key in the following format: `WANDB_API_KEY=your_api_key_here`
+4. Run `docker build -t mnist_classifier . `  
+5. Run `docker run --env-file .env mnist_classifier`
+
+------------------------------------------------------------------------------------  
+
 **Local environment (optional):**
 
 1. Create Virtual Environment (optional but recommended):  
@@ -64,6 +72,6 @@ If not installed, follow the instructions from [Docker's official website](https
 
 2. Install the necessary packages listed in requirements.txt:     `pip install -r requirements.txt`  
 
-3. Run the script:    `python3 main.py`  
+3. Run the script:    `python3 1_main.py`  
 
 4. Deactivate Virtual Environment when done:   `deactivate`
