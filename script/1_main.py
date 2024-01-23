@@ -4,6 +4,7 @@ training, and evaluation.
 """
 import numpy as np
 import wandb
+import os
 from wandb.keras import WandbCallback
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import f1_score
