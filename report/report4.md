@@ -114,7 +114,7 @@ Furthermore, we wanted to try the same tasks on a colored (RGB) dataset, for whi
 - color channel distributions are added, 
 - the "average images" are one block of color. 
 
-The notebooks are found under 'script/4_mnist_exploratory.ipynb' and 'script/4_cifar10_exploratory.ipynb' respectively.
+The notebooks are found under '*_script/4_mnist_exploratory.ipynb_*' and '*_script/4_cifar10_exploratory.ipynb_*' respectively.
 
 
 ### References:
