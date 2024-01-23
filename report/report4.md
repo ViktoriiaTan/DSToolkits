@@ -53,7 +53,7 @@ In the case of a binary classifier, it is a 2x2 matrix and the cells are the fol
 
 ## Task 2
 
-Link to our [W&B Project]`https://wandb.ai/tantsuraviktoria/mnist_digit_classification?workspace=user-tantsuraviktoria`
+Link to our [W&B Project](https://wandb.ai/tantsuraviktoria/mnist_digit_classification?workspace=user-tantsuraviktoria)
 
 To accomplish Task 2, we started by creating a new Dockerfile, specifically designed to integrate seamlessly with Weights & Biases (W&B). This new Dockerfile, similar to our previous version, focuses on incorporating all necessary dependencies for W&B.   
 A key feature of this update is the addition of the docker_entrypoint.sh script. This script is configured to automatically execute at the start of our Docker container, where it efficiently loads the W&B token from a .env file and sets it as an environment variable.  
@@ -75,7 +75,7 @@ We made several updates to the 1_main.py script:
 - After the training phase, we also saved the model on W&B using wandb.save("model.h5").  
 
 For **model evaluation**, since we are working on multi-class classification problem, we initially chose **accuracy** because it gives a quick idea of how well model is performing overall by showing the proportion of correctly predicted instances out of all predictions.This is particularly relevant in a well-balanced dataset like our MNIST, where each class (digit) is roughly equally represented.  
-However, we recognized that accuracy alone doesn’t account for the type of errors made by the model. So, we also decided to include more complex metrics for a comprehensive evaluation(F1 score, confusion matrix). 
+However, we recognized that accuracy alone doesn’t account for the type of errors made by the model. So, we also decided to include more complex metrics for a comprehensive evaluation(F1 score, confusion matrix).   
 The **F1 score**, a single metric balancing both false positives and false negatives, was selected for its ability to provide a more nuanced understanding of the model's performance.  
 Additionally, we used a **confusion matrix** for a detailed breakdown of where our model is making correct and incorrect predictions, to understand the model's performance across different classes.  
 
@@ -89,7 +89,8 @@ These changes let us see how they affected the model.
 We observed that modifications to the learning rate and optimizer with increase in batch size (to 256) resulted in a noticeable decrease in both the F1 score and accuracy compared to the original configuration and other tested variants.  
 On the other hand, adjustments such as changing the batch size and adding an additional layer to the network architecture led to only minor changes in these performance metrics.
  
-**Uploading model predictions to W&B**
+**Uploading model predictions to W&B**  
+
 Given the multi-class nature of the task, predictions were in a one-hot encoded format. To make them more interpretable, we used np.argmax to transform each prediction into a class index, representing the most likely class for each input. Next, we created a W&B artifact, added the transformed predictions as a wandb.Table to this artifact and, finally, uploaded it to W&B.  
 
 At the end, we added **logging the Git commit hash in W&B**.  
