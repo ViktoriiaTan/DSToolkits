@@ -58,12 +58,7 @@ To run the code locally with WB,
 4. Run `docker build -t mnist_classifier . `  
 5. Run `docker run --env-file .env mnist_classifier`
 
-------------------------------------------------------------------------------------
-
-**Dockerized environment:**
-
-1. Navigate to the project directory:`cd DSToolkits`   
-2. Build and run the Docker images: `docker-compose up --build`  
+------------------------------------------------------------------------------------  
 
 **Local environment (optional):**
 
