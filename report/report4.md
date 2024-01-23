@@ -99,6 +99,24 @@ Initially, this setup didn't work. But, after realizing that the .git folder was
 
 ## Task 3
 
+We created the exploratory Jupyter Notebook to analyze the [MNIST](https://www.tensorflow.org/datasets/catalog/mnist) dataset, which we have been working with for these projects. 
+
+The notebook 
+- display a sample of images, 
+- explores the dimensions, 
+- explores the distribution of the labels,
+- displays the distribution of the pixel values (greyscale, 0-255),
+- averages the pixel intensity by category, creating an "average picture" of the category,
+- shows the variety of the images withing one category.
+
+Furthermore, we wanted to try the same tasks on a colored (RGB) dataset, for which we chose the [CIFAR-10](https://www.tensorflow.org/datasets/catalog/cifar10) dataset. Due to the nature of the RBG channels, there are some differences:
+- the pixel distributions are separated by channels (colors), 
+- color channel distributions are added, 
+- the "average images" are one block of color. 
+
+The notebooks are found under 'script/4_mnist_exploratory.ipynb' and 'script/4_cifar10_exploratory.ipynb' respectively.
+
+
 ### References:
 
 1. https://www.linkedin.com/pulse/ml-experiment-tracking-what-why-matters-how-implement-jakub-czakon/
@@ -107,3 +125,5 @@ Initially, this setup didn't work. But, after realizing that the .git folder was
 4. https://www.v7labs.com/blog/performance-metrics-in-machine-learning
 5. https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5
 6. https://medium.com/tebs-lab/how-to-classify-mnist-digits-with-different-neural-network-architectures-39c75a0f03e3
+7. https://www.tensorflow.org/datasets/catalog/mnist
+8. https://www.tensorflow.org/datasets/catalog/cifar10
