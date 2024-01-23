@@ -16,5 +16,3 @@ COMMIT_HASH=$(git rev-parse HEAD)
 # Export the commit hash as an environment variable
 export GIT_COMMIT_HASH=$COMMIT_HASH
 
-# Optionally, print the commit hash
-echo "Current Git commit hash: $COMMIT_HASH"

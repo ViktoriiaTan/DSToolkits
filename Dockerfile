@@ -8,13 +8,17 @@ WORKDIR /app
 COPY script/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your application code
+# Copy application code
 COPY . .
 
-# Set the entrypoint script
+# Include the .git directory(in case it's not copied from previous command)
 COPY .git .git
+
+# Copy and set permissions for entry-point and git commit scripts
 COPY docker_entrypoint.sh get_git_commit.sh /
 RUN chmod +x /docker_entrypoint.sh /get_git_commit.sh
+
+# Set the entrypoint script
 ENTRYPOINT ["/docker_entrypoint.sh"]
 CMD ["python3", "/app/script/1_main.py"]
 
