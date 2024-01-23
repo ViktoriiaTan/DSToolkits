@@ -4,7 +4,7 @@ __pycache__/
 
 # Exclude development and version control files
 .vscode/
-.git/
+
 .gitignore
 
 # Exclude Docker-related files
