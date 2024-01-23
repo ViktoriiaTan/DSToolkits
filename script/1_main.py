@@ -18,6 +18,10 @@ def main():
     # Initialize Weights & Biases
     wandb.init(project="mnist_digit_classification", entity="tantsuraviktoria")
     
+    # Retrieve and log the Git commit hash
+    git_commit_hash = os.getenv('GIT_COMMIT_HASH', 'N/A')
+    wandb.config.update({"git_commit_hash": git_commit_hash})
+    
     model_file = '../data/mnist_model.h5'
     
     # Load the data
