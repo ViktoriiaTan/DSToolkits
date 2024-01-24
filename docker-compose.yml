@@ -24,7 +24,9 @@ services:
       - "5050:80"
 
   python-app:
-    build: .
+    build: 
+    context: .
+    dockerfile: Dockerfile
     volumes:
       - .:/app
     depends_on:
@@ -35,6 +37,16 @@ services:
       - DATABASE_NAME=milestone_3
       - DATABASE_USER=admin
       - DATABASE_PASSWORD=secret
+
+flask-app:
+  build:
+    context: .
+    dockerfile: Dockerfile_flask
+  ports:
+  - "5000:5000"
+  depends_on:
+  - python-app
+
 
 volumes:
   postgres_data:
