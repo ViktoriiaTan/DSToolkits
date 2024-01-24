@@ -25,8 +25,8 @@ services:
 
   python-app:
     build: 
-    context: .
-    dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/app
     depends_on:
@@ -38,16 +38,15 @@ services:
       - DATABASE_USER=admin
       - DATABASE_PASSWORD=secret
 
-flask-app:
-  build:
-    context: .
-    dockerfile: Dockerfile_flask
-  ports:
-    -  "5000:5000"
-  depends_on:
-    -   python-app
-    -   postgres
-
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile_flask
+    ports:
+      - "5000:5000"
+    depends_on:
+      - python-app
+      - postgres
 
 volumes:
   postgres_data:
