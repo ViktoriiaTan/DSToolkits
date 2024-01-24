@@ -25,3 +25,16 @@ def save_modelh5(model, filename):
 
 def load_modelh5(filename):
     return keras.models.load_model(filename)
+
+
+
+def save_to_database(image_array, prediction):
+    # Convert image array to bytes
+    image_bytes = image_array.tobytes()
+
+    # Create a new database entry
+    new_entry = ImagePrediction(image_data=image_bytes, prediction=prediction)
+
+    # Add the entry to the database and commit
+    db.session.add(new_entry)
+    db.session.commit()
