@@ -1,22 +1,15 @@
-# Use a lightweight Python image as a base
 FROM python:3.10-slim
 
-# Setting working directory inside the container
 WORKDIR /app
 
-# Install dependencies
 COPY ./script/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy Flask application code
 COPY ./script/app.py .
 
-# Copy and set permissions for entry-point script
 COPY /docker_entrypoint.sh /
 RUN chmod +x /docker_entrypoint.sh
 
-# Expose the port that Flask will run on
 EXPOSE 5000
 
-# Set the entrypoint script
-ENTRYPOINT
+ENTRYPOINT ["/docker_entrypoint.sh"]
