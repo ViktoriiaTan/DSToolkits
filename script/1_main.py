@@ -8,7 +8,7 @@ import os
 from wandb.keras import WandbCallback
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import f1_score
-from module_io import load_mnist, save_modelh5, load_modelh5
+from module_io import load_mnist, save_modelh5, load_modelh5, save_to_database
 from data_prepar import preproc
 from model_architect import create_model
 from train import train_model
@@ -88,6 +88,12 @@ def main():
     if y_pred.ndim > 1 and y_pred.shape[1] > 1:
         # Convert one-hot encoded predictions to class indices
         y_pred = np.argmax(y_pred, axis=1).reshape(-1, 1)
+        
+
+    # Save image and prediction to the database
+    for i in range(len(x_test)):
+        save_to_database(x_test[i], preds[i])
+
         
     # Create a W&B artifact for predictions
     predictions_artifact = wandb.Artifact('predictions', type='predictions')
