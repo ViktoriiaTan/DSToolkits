@@ -43,9 +43,9 @@ flask-app:
     context: .
     dockerfile: Dockerfile_flask
   ports:
-  - "5000:5000"
+    -  "5000:5000"
   depends_on:
-  - python-app
+    -   python-app
 
 
 volumes:
