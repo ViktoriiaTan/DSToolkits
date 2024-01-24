@@ -2,9 +2,18 @@ from flask import Flask, request, jsonify
 import numpy as np
 from PIL import Image
 from io import BytesIO
-from module_io import load_modelh5  # Assuming you have the necessary functions in module_io
+from module_io import load_modelh5, save_to_database  
 
 app = Flask(__name__)
+
+
+# Configure SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:secret@postgres/milestone_3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize SQLAlchemy
+db.init_app(app)
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -25,8 +34,8 @@ def predict():
         # Assuming prediction is a one-hot encoded vector, convert it to a label
         predicted_label = np.argmax(prediction)
 
-        # Save image and prediction to the database (You need to implement this)
-        # ...
+        # Save image and prediction to the database 
+        save_to_database(image_array, predicted_label)
 
         return jsonify({'prediction': int(predicted_label)})
 
