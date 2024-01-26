@@ -49,9 +49,8 @@ If not installed, follow the instructions from [Docker's official website](https
 
 1. To easily start the entire system, use the following command: `docker-compose up`
 2. Once the Docker containers are up and running, you can access the front-end by opening a web browser and navigating to [http://localhost:5000](http://localhost:).
-3. Using the upload for on the website, select an image containing handwritten digits from your local computer. Follow the on-screen instructions to submit the image.
-4. After uploading the image, the neural network will process it, and the prediction for the handwritten digits will be displayed on the web page. Additionally, the uploaded image is shown on the page.
-5. The prediction is saved into the database. You can inspect the database based on your configuration.
+
+For further information about the status of the project, please refer to *report/report5.md*
 
 
 ------------------------------------------------------------------------------------  
