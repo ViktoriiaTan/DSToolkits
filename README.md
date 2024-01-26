@@ -1,6 +1,6 @@
 # Convolutional neural network on the MNIST dataset
 
-This project focuses on setting up and running a Convolutional Neural Network (mnist_convnet.py) to recognize handwritten digits using the MNIST dataset.
+This project focuses on setting up and running a Convolutional Neural Network to recognize handwritten digits using the MNIST dataset. This project extends the functionality of the existing handwritten digit classifier by integrating it into a Flask web application. The system includes a REST API that allows users to submit images containing handwritten digits for classification using the trained CNN. Additionally, the Flask app is dockerized, and the database is utilized to store predictions and associated image data.
 
 ## Instructions to run the script:
 
@@ -47,16 +47,12 @@ If not installed, follow the instructions from [Docker's official website](https
 
 ### Setup and execution
 
-The code now is connected to [Weights and Biases](https://wandb.ai/tantsuraviktoria/mnist_digit_classification?workspace=user-tantsuraviktoria) for performance tracking.
+1. To easily start the entire system, use the following command: `docker-compose up`
+2. Once the Docker containers are up and running, you can access the front-end by opening a web browser and navigating to [http://localhost:5000](http://localhost:) or [http://127.0.0.1:5000](http://127.0.0.1:5000).
+3. Using the upload for on the website, select an image containing handwritten digits from your local computer. Follow the on-screen instructions to submit the image.
+4. After uploading the image, the neural network will process it, and the prediction for the handwritten digits will be displayed on the web page. Additionally, the uploaded image is shown on the page.
+5. The prediction is saved into the database. You can inspect the database based on your configuration.
 
-To run without WB connection, execute `python3 1_main.py`. Follow the instructions on the screen.
-
-To run the code locally with WB,
-1. Sign up to [Weights and Biases](https://wandb.ai/site). 
-2. Change the "entity" to your username in *line 20* of *_1_main.py_*.
-3. Create a '.env' file in the same folder (DSToolkits) using your API key in the following format: `WANDB_API_KEY=your_api_key_here`
-4. Run `docker build -t mnist_classifier . `  
-5. Run `docker run --env-file .env mnist_classifier`
 
 ------------------------------------------------------------------------------------  
 
@@ -75,3 +71,10 @@ To run the code locally with WB,
 3. Run the script:    `python3 1_main.py`  
 
 4. Deactivate Virtual Environment when done:   `deactivate`
+
+
+
+-------------------------------------------------------------------------------------
+# Contributors
+Viktoriia Tantsiura
+Mercédesz Lehoczky
