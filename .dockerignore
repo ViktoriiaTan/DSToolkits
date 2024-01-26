@@ -12,11 +12,11 @@ Dockerfile
 .dockerignore
 
 # Exclude data files that are not needed for the Docker image
-data/
 report/
 *.md
 path/
 .env
+wandb/
 
 # Exclude virtual environment files
 venv/
