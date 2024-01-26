@@ -76,4 +76,5 @@ For further information about the status of the project, please refer to *report
 -------------------------------------------------------------------------------------
 # Contributors
 Viktoriia Tantsiura
+
 Mercédesz Lehoczky
