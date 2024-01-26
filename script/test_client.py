@@ -26,7 +26,10 @@ url = 'http://flask_app:5000/predict'
 def make_request(url, img_str):
     try:
         files = {'image': ('image.jpg', img_str, 'image/jpeg')}
-        response = requests.post(url, files=files)
+        
+        headers = {'Accept': 'application/json'}
+        response = requests.post(url, files=files, headers=headers)
+        
         if response.status_code == 200:
             print("Prediction:", response.json())
         else:
