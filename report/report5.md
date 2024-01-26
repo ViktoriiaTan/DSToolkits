@@ -28,5 +28,4 @@ However, an issue arosed when we attempted to upload new image to the Flask app 
 **Solution:** We introduced a retry mechanism within the test client script. This modification allowed the script to periodically attempt communication with the Flask app, waiting until the Flask service was available and ready to process requests effectively.
 
 **Problem 2:** Initially, the test client failed to reach the Flask app's prediction API due to an incorrect URL (*localhost:5000/predict*) in the test client script.
-
 **Solution:** We corrected the URL in the test client script to *flask_app:5000/predict*, aligning it with the service name defined in *docker-compose.yml*. This adjustment ensured that the test client correctly addressed the Flask container within the Docker network environment.
