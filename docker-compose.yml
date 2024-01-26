@@ -8,6 +8,7 @@ services:
       - "80:5000"
     volumes:
       - ./data:/data
+      - ./script/static:/app/static
     depends_on:
       - postgres
       
