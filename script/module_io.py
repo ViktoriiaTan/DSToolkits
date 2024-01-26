@@ -1,6 +1,5 @@
 """
-Module for handling input and output operations, including data loading,
-as well as saving and loading models.
+Module for data loading.
 """
 
 from tensorflow import keras
@@ -19,22 +18,3 @@ def load_mnist():
     return (x_train, y_train), (x_test, y_test)
 
 
-def save_modelh5(model, filename):
-    model.save(filename)
-
-
-def load_modelh5(filename):
-    return keras.models.load_model(filename)
-
-
-
-def save_to_database(image_array, prediction):
-    # Convert image array to bytes
-    image_bytes = image_array.tobytes()
-
-    # Create a new database entry
-    new_entry = ImagePrediction(image_data=image_bytes, prediction=prediction)
-
-    # Add the entry to the database and commit
-    db.session.add(new_entry)
-    db.session.commit()

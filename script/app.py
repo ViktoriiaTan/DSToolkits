@@ -1,46 +1,58 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, url_for
+from werkzeug.utils import secure_filename
+from eval_predict import get_prediction
+from database import save_to_db, init_db
+from data_prepar import decode_image
+from keras.models import load_model
 import numpy as np
-from PIL import Image
-from io import BytesIO
-from module_io import load_modelh5, save_to_database  
+import psycopg2 
+import os
 
+
+# Initialize the Flask app
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 
+# Load trained model
+model = load_model('../data/model.h5')
 
-# Configure SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:secret@postgres/milestone_3'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Database initialization
+init_db()
 
-# Initialize SQLAlchemy
-db.init_app(app)
-
+@app.route('/')
+def upload_form():
+    return render_template('upload.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        # Get image data from the request
-        image_data = request.get_data()
-        image = Image.open(BytesIO(image_data))
+    if 'image' in request.files:
+        file = request.files['image']
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
 
-        # Convert image to numpy array
-        image_array = np.array(image)
-
-        # Load the pre-trained model
-        model = load_modelh5("model.h5")  # Update with your actual model loading function
-
-        # Make prediction
-        prediction = model.predict(np.expand_dims(image_array, axis=0))
-
-        # Assuming prediction is a one-hot encoded vector, convert it to a label
-        predicted_label = np.argmax(prediction)
-
-        # Save image and prediction to the database 
-        save_to_database(image_array, predicted_label)
-
-        return jsonify({'prediction': int(predicted_label)})
-
-    except Exception as e:
-        return jsonify({'error': str(e)})
-
+            image_data = open(file_path, 'rb').read()
+        
+        image_array = decode_image(image_data)
+        
+        prediction = get_prediction(model, np.array(image_array))
+        print('predict done')
+        prediction = int(prediction)
+        save_to_db(image_data, prediction) ## Save image data and prediction to the database
+        print('saved ok')
+        
+        # Check if the request wants a JSON response
+        if request.accept_mimetypes.best == 'application/json':
+            return jsonify({'prediction': prediction})
+        else:
+            return render_template('result.html', prediction=prediction, image_path=file_path)
+    else:
+        response = jsonify({'error': 'No image provided'})
+        response.status_code = 400
+        return response
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
