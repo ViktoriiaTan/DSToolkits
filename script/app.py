@@ -1,46 +1,34 @@
 from flask import Flask, request, jsonify
+from eval_predict import get_prediction
+from database import save_to_db, init_db
+from data_prepar import decode_image
+from keras.models import load_model
 import numpy as np
-from PIL import Image
-from io import BytesIO
-from module_io import load_modelh5, save_to_database  
+import psycopg2 
 
+# Initialize the Flask app
 app = Flask(__name__)
 
+# Load trained model
+model = load_model('../data/model.h5')
 
-# Configure SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:secret@postgres/milestone_3'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Initialize SQLAlchemy
-db.init_app(app)
-
+# Database initialization
+init_db()
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        # Get image data from the request
-        image_data = request.get_data()
-        image = Image.open(BytesIO(image_data))
-
-        # Convert image to numpy array
-        image_array = np.array(image)
-
-        # Load the pre-trained model
-        model = load_modelh5("model.h5")  # Update with your actual model loading function
-
-        # Make prediction
-        prediction = model.predict(np.expand_dims(image_array, axis=0))
-
-        # Assuming prediction is a one-hot encoded vector, convert it to a label
-        predicted_label = np.argmax(prediction)
-
-        # Save image and prediction to the database 
-        save_to_database(image_array, predicted_label)
-
-        return jsonify({'prediction': int(predicted_label)})
-
-    except Exception as e:
-        return jsonify({'error': str(e)})
+    if 'image' in request.files:
+        image_data = request.files['image'].read()
+        
+        image_array = decode_image(image_data)
+        
+        prediction = get_prediction(model, np.array(image_array))
+        
+        save_to_db(image_data, prediction) ## Save image data and prediction to the database
+        
+        return jsonify({'prediction': int(prediction)})
+    else:
+        return jsonify({'error': 'No image provided'}), 400
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
