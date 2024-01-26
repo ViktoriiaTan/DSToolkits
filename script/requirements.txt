@@ -3,3 +3,6 @@ numpy==1.23.5
 tensorflow==2.14.0
 wandb==0.16.2
 scikit-learn==1.4.0
+Pillow==10.1.0
+psycopg2==2.9.9
+flask==3.0.1

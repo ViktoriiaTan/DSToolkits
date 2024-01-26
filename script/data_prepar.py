@@ -1,11 +1,7 @@
-"""
-Module for preprocessing the MNIST dataset, including data scaling,
-reshaping  and conversion of class vectors to binary matrices.
-"""
-
+import io
 import numpy as np
 from tensorflow import keras
-
+from PIL import Image
 
 def preproc(x_train, y_train, x_test, y_test):
     """
@@ -36,3 +32,26 @@ def preproc(x_train, y_train, x_test, y_test):
     y_test = keras.utils.to_categorical(y_test, num_classes)
 
     return (x_train, y_train), (x_test, y_test), num_classes, input_shape
+    
+    
+def decode_image(image_data):
+    """
+    Decode an image from raw data.
+    
+    Args:
+        image_data (bytes): Raw image data.
+
+    Returns:
+        numpy.array: Decoded and preprocessed image array.
+    """
+    # Open the image using PIL
+    image = Image.open(io.BytesIO(image_data))
+
+    # Resize the image to 28x28 (MNIST image size) and convert to grayscale
+    image = image.resize((28, 28)).convert('L')
+
+    # Convert the image to a NumPy array and normalize it
+    image_array = np.array(image) / 255.0
+
+    return image_array
+

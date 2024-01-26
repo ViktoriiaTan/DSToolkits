@@ -1,6 +1,5 @@
 """
-Module for handling input and output operations, including data loading,
-as well as saving and loading models.
+Module for data loading.
 """
 
 from tensorflow import keras
@@ -19,9 +18,3 @@ def load_mnist():
     return (x_train, y_train), (x_test, y_test)
 
 
-def save_modelh5(model, filename):
-    model.save(filename)
-
-
-def load_modelh5(filename):
-    return keras.models.load_model(filename)
