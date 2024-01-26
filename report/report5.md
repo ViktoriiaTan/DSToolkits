@@ -19,7 +19,8 @@ To facilitate smooth communication and orchestration among these containers, we 
 
 Additionally, we developed a frontend that included upload and result.html templates, allowing users to select files for prediction. Two HTML templates were created: upload.html for the file upload form and result.html for displaying predictions and uploaded images. These templates were placed in the templates directory.  
 
-Flask app effectively managed file uploads through the /predict route, saving uploaded files and processing them accordingly. After processing images and generating predictions, the script rendered the result.html template, displaying predictions alongside the uploaded images. This process worked seamlessly when tested with sample uploads from the MNIST dataset. However, an issue arose when attempting to upload new images to the Flask app from frontend upload page, as these image was not recognized as part of the request.  
+Flask app effectively managed file uploads through the /predict route, saving uploaded files and processing them accordingly. After processing images and generating predictions, the script rendered the result.html template, displaying predictions alongside the uploaded images. This process worked seamlessly when tested with sample uploads from the MNIST dataset.  
+However, an issue arosed when we attempted to upload new image to the Flask app from frontend upload page and these image was not recognized as part of the request. But unfortunately, we didn't have enough time to solve this problem. We are continuing to work towards resolving this issue.   
 
 **Challenges and solutions:**  
 
