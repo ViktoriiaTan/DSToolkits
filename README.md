@@ -47,7 +47,7 @@ If not installed, follow the instructions from [Docker's official website](https
 
 ### Setup and execution
 
-1. To easily start the entire system, use the following command: `docker-compose up`
+1. To easily start the entire system, use the following command: `docker- compose build` then `docker-compose up`
 2. Once the Docker containers are up and running, you can access the front-end by opening a web browser and navigating to [http://localhost:5000](http://localhost:).
 
 For further information about the status of the project, please refer to *report/report5.md*
