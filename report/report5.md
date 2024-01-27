@@ -5,7 +5,7 @@
 To accomplish the task at hand, we created three Docker containers, each responsible for a specific component of the system. Here is a description of how we configured the system:  
 
 - **PostgreSQL database container:** This container was set up to persistently store images and predictions.  
-- **Flask application Container:** Within this container, we hosted a REST API responsible for various tasks, including image uploads, image processing through a pre-trained neural network for prediction, and displaying the results. The configuration included the following steps:  
+- **Flask application container:** Within this container, we hosted a REST API responsible for various tasks, including image uploads, image processing through a pre-trained neural network for prediction, and displaying the results. The configuration included the following steps:  
 1. Loading a pre-trained neural network model during initialization.  
 2. Initializing the database to store data.  
 3. Setting up a route (/) to display an HTML page for image uploads.
@@ -13,7 +13,17 @@ To accomplish the task at hand, we created three Docker containers, each respons
 5. Providing predictions in either JSON format or displaying them on an HTML page based on the client's request.
 6. Running the application on port 5000 for network accessibility.
 
-- **Test client container:** This container was specifically designed to send a sample MNIST image to the Flask app for prediction. It simulated real-world scenarios where clients don't have direct access to another system's database but need to prepare and test images automatically. The test client waited for the Flask app to become available and then sent a sample image to the prediction endpoint.  
+- **Test client container:** This container was specifically designed to send a sample MNIST image to the Flask app for prediction. It simulated real-world scenarios where clients don't have direct access to another system's database but need to prepare and test images automatically. The test client waited for the Flask app to become available and then sent a sample image to the prediction endpoint.
+   
+- **pgAdmin:** To check our PostgreSQL database and display the predictions from Flask web application on pgAdmin interface.
+
+The requirement file was updated to include wandb and scikit-learn packages with fixed versions.
+
+|   Package  | Version |                             SHA256                             |
+|------------|---------|----------------------------------------------------------------|
+|Pillow      |0.1.0    |61f1a9d247317fa08a308daaa8ee7b3f760ab1809ca2da14ecc88ae4257d6172|
+|psycopg     |2-2.9.9  |d1454bde93fb1e224166811694d600e746430c006fbb031ea06ecc2ea41bf156|
+|Flask       |3.0.1    |55d03fea4c4e9fd0ad75dc2e7e2b6757b80c152c032ea1d1de487461d8140efc|
 
 To facilitate smooth communication and orchestration among these containers, we updated the *docker-compose.yml* file with the necessary configurations, ensuring proper networking and dependency settings.
 
