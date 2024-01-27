@@ -2,7 +2,7 @@
 
 ## Task 2,3
 
-To accomplish the task at hand, we created three Docker containers, each responsible for a specific component of the system. Here is a description of how we configured the system:  
+To accomplish the task at hand, we created four Docker containers, each responsible for a specific component of the system. Here is a description of how we configured the system:  
 
 - **PostgreSQL database container:** This container was set up to persistently store images and predictions.  
 - **Flask application container:** Within this container, we hosted a REST API responsible for various tasks, including image uploads, image processing through a pre-trained neural network for prediction, and displaying the results. The configuration included the following steps:  
