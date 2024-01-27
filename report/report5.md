@@ -17,7 +17,7 @@ To accomplish the task at hand, we created three Docker containers, each respons
    
 - **pgAdmin:** To check our PostgreSQL database and display the predictions from Flask web application on pgAdmin interface.
 
-The requirement file was updated to include wandb and scikit-learn packages with fixed versions.
+The requirement file was updated to include pillow, psycopg and flask packages with fixed versions.
 
 |   Package  | Version |                             SHA256                             |
 |------------|---------|----------------------------------------------------------------|
